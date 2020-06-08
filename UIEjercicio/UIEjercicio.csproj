@@ -5,7 +5,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C9DF183E-2CD2-413A-93D8-301E5DC81B64}</ProjectGuid>
+    <ProjectGuid>{7F85EA19-28D7-476C-9C28-C7A2EFE5617A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>UIEjercicio</RootNamespace>
     <AssemblyName>UIEjercicio</AssemblyName>

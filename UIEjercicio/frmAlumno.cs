@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BEUEjercicio;
+using BEUEjercicio.Transactions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,24 +19,38 @@ namespace UIEjercicio
             InitializeComponent();
         }
 
-        private void label4_Click(object sender, EventArgs e)
+        private void cargarListado()
         {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
+            lstAlumnos.Rows.Clear();
+            List<Alumno> alumnos = AlumnoBLL.List();
+            this.lstAlumnos.DataSource = alumnos;
         }
 
         private void frmAlumno_Load(object sender, EventArgs e)
         {
+            cargarListado();
+        }
 
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Alumno alumno = new Alumno();
+                alumno.apellidos = txtApellido.Text.Trim();
+                alumno.cedula = txtCedula.Text.Trim();
+                alumno.lugar_nacimiento = txtLugar.Text.Trim();
+                alumno.sexo = rbMasculino.Checked ? "M" : "F";
+                alumno.fecha_nacimiento = dtpFecha.Value;
+
+                AlumnoBLL.Create(alumno);
+                cargarListado();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
         }
     }
 }
