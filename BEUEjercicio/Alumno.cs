@@ -40,6 +40,8 @@ namespace BEUEjercicio
         public string cedula { get; set; }
 
         [Display(Name = "Fecha de Nacimiento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd'/'MM'/'yyyy}")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> fecha_nacimiento { get; set; }
 
         [DataType(DataType.Text)]

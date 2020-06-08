@@ -7,17 +7,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BEUEjercicio;
+using BEUEjercicio.Transactions;
 
 namespace PryEjercicio.Controllers
 {
     public class AlumnosController : Controller
     {
-        private Entities db = new Entities();
-
         // GET: Alumnos
         public ActionResult Index()
         {
-            return View(db.Alumnoes.ToList());
+            return View(AlumnoBLL.List());
         }
 
         // GET: Alumnos/Details/5
@@ -27,7 +26,7 @@ namespace PryEjercicio.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Alumno alumno = db.Alumnoes.Find(id);
+            Alumno alumno = AlumnoBLL.Get(id);
             if (alumno == null)
             {
                 return HttpNotFound();
@@ -50,8 +49,7 @@ namespace PryEjercicio.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Alumnoes.Add(alumno);
-                db.SaveChanges();
+                AlumnoBLL.Create(alumno);
                 return RedirectToAction("Index");
             }
 
@@ -65,7 +63,7 @@ namespace PryEjercicio.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Alumno alumno = db.Alumnoes.Find(id);
+            Alumno alumno = AlumnoBLL.Get(id);
             if (alumno == null)
             {
                 return HttpNotFound();
@@ -82,8 +80,7 @@ namespace PryEjercicio.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(alumno).State = EntityState.Modified;
-                db.SaveChanges();
+                AlumnoBLL.Update(alumno);
                 return RedirectToAction("Index");
             }
             return View(alumno);
@@ -96,7 +93,7 @@ namespace PryEjercicio.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Alumno alumno = db.Alumnoes.Find(id);
+            Alumno alumno = AlumnoBLL.Get(id);
             if (alumno == null)
             {
                 return HttpNotFound();
@@ -109,19 +106,9 @@ namespace PryEjercicio.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Alumno alumno = db.Alumnoes.Find(id);
-            db.Alumnoes.Remove(alumno);
-            db.SaveChanges();
+            AlumnoBLL.Delete(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
