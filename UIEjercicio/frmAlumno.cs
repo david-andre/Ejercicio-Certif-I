@@ -21,7 +21,7 @@ namespace UIEjercicio
 
         private void cargarListado()
         {
-            lstAlumnos.Rows.Clear();
+            this.lstAlumnos.DataSource = null;
             List<Alumno> alumnos = AlumnoBLL.List();
             this.lstAlumnos.DataSource = alumnos;
         }
@@ -37,6 +37,7 @@ namespace UIEjercicio
             try
             {
                 Alumno alumno = new Alumno();
+                alumno.nombre = txtNombre.Text.Trim();
                 alumno.apellidos = txtApellido.Text.Trim();
                 alumno.cedula = txtCedula.Text.Trim();
                 alumno.lugar_nacimiento = txtLugar.Text.Trim();

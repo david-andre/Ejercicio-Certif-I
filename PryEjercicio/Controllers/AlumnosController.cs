@@ -16,6 +16,9 @@ namespace PryEjercicio.Controllers
         // GET: Alumnos
         public ActionResult Index()
         {
+            //return View("Index", AlumnoBLL.List()); Ejemplo con el método View sobrecargado
+            //1er parametro Nombre de la vista, 2do el modelo
+            //ViewBag.Title = "Listado de Alumnos"; Viebag me permite enviar contenido del controlador a la vista
             return View(AlumnoBLL.List());
         }
 
@@ -24,14 +27,14 @@ namespace PryEjercicio.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); //Petición equivocada
             }
             Alumno alumno = AlumnoBLL.Get(id);
             if (alumno == null)
             {
-                return HttpNotFound();
+                return HttpNotFound(); //Alumno no Encontrado
             }
-            return View(alumno);
+            return View(alumno); //Vista + modelo
         }
 
         // GET: Alumnos/Create
