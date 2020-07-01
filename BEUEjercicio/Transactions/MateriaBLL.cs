@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace BEUEjercicio.Transactions
 {
-    public class AlumnoBLL
+    public class MateriaBLL
     {
         //BLL BUSSINESS LOGIC LAYER 
-        public static Alumno Get(int? id)
+        public static Materia Get(int? id)
         {
             Entities db = new Entities();
-            return db.Alumnoes.Find(id);
+            return db.Materias.Find(id);
         }
 
-        public static void Create(Alumno alumno)
+        public static void Create(Materia materia)
         {
-            using(Entities db = new Entities())
+            using (Entities db = new Entities())
             {
-                using(var transaction = db.Database.BeginTransaction())
+                using (var transaction = db.Database.BeginTransaction())
                 {
                     try
                     {
-                        db.Alumnoes.Add(alumno);
+                        db.Materias.Add(materia);
                         db.SaveChanges();
                         transaction.Commit();
                     }
@@ -36,7 +36,7 @@ namespace BEUEjercicio.Transactions
             }
         }
 
-        public static void Update(Alumno alumno)
+        public static void Update(Materia materia)
         {
             using (Entities db = new Entities())
             {
@@ -44,8 +44,8 @@ namespace BEUEjercicio.Transactions
                 {
                     try
                     {
-                        db.Alumnoes.Attach(alumno);
-                        db.Entry(alumno).State = System.Data.Entity.EntityState.Modified;
+                        db.Materias.Attach(materia);
+                        db.Entry(materia).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                         transaction.Commit();
                     }
@@ -66,8 +66,8 @@ namespace BEUEjercicio.Transactions
                 {
                     try
                     {
-                        Alumno alumno = db.Alumnoes.Find(id);
-                        db.Entry(alumno).State = System.Data.Entity.EntityState.Deleted;
+                        Materia materia = db.Materias.Find(id);
+                        db.Entry(materia).State = System.Data.Entity.EntityState.Deleted;
                         db.SaveChanges();
                         transaction.Commit();
                     }
@@ -80,41 +80,20 @@ namespace BEUEjercicio.Transactions
             }
         }
 
-        public static List<Alumno> List()
+        public static List<Materia> List()
         {
             Entities db = new Entities(); //Instancia el contexto
-            return db.Alumnoes.ToList(); //SQL -> SELECT * FROM dbo.Alumno}
+            return db.Materias.ToList(); //SQL -> SELECT * FROM dbo.Alumno}
             //Los metdos del EntityFramework se denomina Linq, y la evaluación de condiciones Lambda
         }
 
-        public static List<Alumno> ListToNames(){
-            {
+        public static List<Materia> ListToNames()
+        {
+  
                 Entities db = new Entities();
-                List<Alumno> resultado = new List<Alumno>();
-                db.Alumnoes.ToList().ForEach(x => resultado.Add(new Alumno { nombre = x.nombre + " " + x.apellidos, idalumno = x.idalumno }));
+                List<Materia> resultado = new List<Materia>();
+                db.Materias.ToList().ForEach(x => resultado.Add(new Materia { nombre = x.nrc + "- " + x.nombre, idmateria = x.idmateria }));
                 return resultado;
-            }
-        }
-
-        private static List<Alumno> GetAlumnos(string criterio)
-        {
-            //Ejemplo: criterio = 'vela'
-            //Posibles resultados => Vela, Velasco, Avelardo ...
-            Entities db = new Entities(); //Instancia el contexto
-            return db.Alumnoes.Where(x => x.apellidos.ToLower().Contains(criterio)).ToList(); //SQL -> SELECT * FROM dbo.Alumno}
-            //Los metdos del EntityFramework se denomina Linq, y la evaluación de condiciones Lambda
-        }
-
-        private static Alumno GetAlumno(int? id)
-        {
-            Entities db = new Entities();
-            return db.Alumnoes.FirstOrDefault(x => x.idalumno == id);
-        }
-
-        private static Alumno GetAlumno(string cedula)
-        {
-            Entities db = new Entities();
-            return db.Alumnoes.FirstOrDefault(x => x.cedula == cedula);
         }
     }
 }

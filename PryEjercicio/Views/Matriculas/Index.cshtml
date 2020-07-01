@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BEUEjercicio.Matricula>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.costo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Alumno.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Materia.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.costo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+            @if (item.tipo.Equals("P"))
+            {
+                <td>@Html.Label("Primera", htmlAttributes: new { @class = "h5 label label-success" })</td>
+            }
+            else if (item.tipo.Equals("S"))
+            {
+                <td>@Html.Label("Segunda", htmlAttributes: new { @class = "h5 label label-warning" })</td>
+            }
+            else
+            {
+                <td>@Html.Label("Tercera", htmlAttributes: new { @class = "h5 label label-danger" })</td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Alumno.nombre)
+                @Html.DisplayFor(modelItem => item.Alumno.apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Materia.nrc) -
+                @Html.DisplayFor(modelItem => item.Materia.nombre)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.idmatricula }) |
+                @Html.ActionLink("Details", "Details", new { id = item.idmatricula }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.idmatricula })
+            </td>
+        </tr>
+    }
+
+</table>
